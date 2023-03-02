@@ -1,7 +1,7 @@
+import errno
 import json
 from multiprocessing import Pool, cpu_count, freeze_support
 
-from climateforcing.utils import mkdir_p
 import fair
 from fair.tools.magicc import scen_open
 import os
@@ -18,7 +18,7 @@ natural_ems = pd.read_csv(
 emissions_in = {}
 results_out = {}
 WORKERS = cpu_count() - 1
-version = "v22.4"
+version = "v22.6"
 outdir = '../output/{}/fair_{}/'
 parallel_processing = True
 end_year = 2100
@@ -48,6 +48,25 @@ for i, scenario in enumerate(scenarios):
             tmp = np.concatenate([check_prehist[:needed_rows, :], tmp])
 
     emissions_in[scenario] = tmp
+
+def mkdir_p(path):
+    """Check to see if directory exists, and if not, create it.
+    Parameters
+    ----------
+        path : str
+            directory to create
+    Raises
+    ------
+        OSError:
+            if directory cannot be created
+    """
+    try:
+        os.makedirs(path)
+    except OSError as exc:
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
 
 def run_fair(args):
     thisC, thisF, thisT, _, thisOHU, _, thisAF = fair.forward.fair_scm(**args)
@@ -85,9 +104,7 @@ def fair_process(emissions):
     if __name__ == '__main__':
         if parallel_processing:
             with Pool(WORKERS) as pool:
-                result = list(
-                    tqdm(pool.imap(run_fair, updated_config), total=len(updated_config),
-                         position=0, leave=True))
+                result = list(pool.imap(run_fair, updated_config))
 
             result_t = np.array(result).transpose(1, 2, 0)
             c_co2, c_ch4, t, f_ch4, f_tot = result_t
