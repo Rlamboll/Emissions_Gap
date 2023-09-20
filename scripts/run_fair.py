@@ -18,7 +18,7 @@ natural_ems = pd.read_csv(
 emissions_in = {}
 results_out = {}
 WORKERS = cpu_count() - 1
-version = "v23"
+version = "v23.6"
 outdir = '../output/{}/fair_{}/'
 parallel_processing = True
 end_year = 2100
@@ -138,7 +138,7 @@ def main():
 
     for scenario in scenarios:
         for var in [
-            'co2_concentrations', 'ch4_concentrations', 'temperatures',
+            'co2_concentrations', 'temperatures',
         ]:
             mkdir_p(outdir.format(version, var.replace("effective_radiative_forcing", "erf")))
             df_out = pd.DataFrame(
