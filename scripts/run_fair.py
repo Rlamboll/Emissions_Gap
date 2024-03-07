@@ -18,7 +18,7 @@ natural_ems = pd.read_csv(
 emissions_in = {}
 results_out = {}
 WORKERS = cpu_count() - 1
-version = "v23.7"
+version = "v23.9"
 outdir = '../output/{}/fair_{}/'
 parallel_processing = True
 end_year = 2100
@@ -33,7 +33,7 @@ scens_to_run = [
 ]
 
 # Often want to restrict number of runs in one go
-scens_to_run = scens_to_run[:]
+scens_to_run = scens_to_run[200:600]
 
 scenarios = [x[:-5] for x in scens_to_run]
 check_prehist = np.loadtxt(
