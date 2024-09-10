@@ -17,8 +17,8 @@ natural_ems = pd.read_csv(
 
 emissions_in = {}
 results_out = {}
-WORKERS = cpu_count() - 2
-version = "v24.0"
+WORKERS = cpu_count() - 1
+version = "v24.2"
 outdir = '../output/{}/fair_{}/'
 parallel_processing = True
 end_year = 2100
@@ -32,12 +32,16 @@ scens_to_run = [
     if x.endswith('.SCEN')
 ]
 
-# Often want to restrict number of runs in one go
+# Often want to restrict number of runs in one go, and ensure no re-runs.
+# Make sure to delete this if you want to overwrite existing runs!
+"""
 ran_scens = [
     x[:-4] for x in os.listdir(outdir.format(version, "temperatures"))
     if x.endswith('.csv')
 ]
 scens_to_run = [s for s in scens_to_run if s[:-5] not in ran_scens]
+"""
+# Restrict the number to run here if you wish to run this in batches:
 scens_to_run = scens_to_run[:]
 
 scenarios = [x[:-5] for x in scens_to_run]
