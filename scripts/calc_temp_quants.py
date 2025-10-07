@@ -32,6 +32,7 @@ for file in scenariofiles:
                 "model": quant_res["model"].iloc[0],
                  "scenario": quant_res["scenario"].iloc[0],
                  "Temp": temp,
+                 "p exceed 2050": tmpsum[2050],
                  "p exceed 2100": tmpsum[2100],
                  "p exceed peak": tmpsum.max(),
              },
