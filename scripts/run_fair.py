@@ -79,7 +79,7 @@ def main():
     natural_ems = natural_ems_df.iloc[:end_year - start_year + 1, 1:].values
 
     WORKERS = cpu_count() - 1
-    version = "v25.v1a"
+    version = "v25.v2a"
     outdir = '../output/{}/fair_{}/'
     parallel_processing = True
 
@@ -88,11 +88,9 @@ def main():
 
     # Often want to restrict number of runs in one go, and ensure no re-runs.
     # Make sure to delete this if you want to overwrite existing runs!
-    """
     ran_scens = [x[:-4] for x in os.listdir(outdir.format(version, "temperatures")) if x.endswith('.csv')]
     scens_to_run = [s for s in scens_to_run if s[:-5] not in ran_scens]
     """
-    # scens_to_run = [x for x in scens_to_run if "SSP2_kyoto_extended" not in x]
     # Restrict runs here to run in chunks
     # print(f"Remaining files: {len(scens_to_run)}")
     # scens_to_run = scens_to_run[0:420]

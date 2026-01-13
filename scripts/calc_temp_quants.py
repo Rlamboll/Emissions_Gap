@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-version = "v25.v1a"
+version = "v25.v2a"
 outfile = f"../output/{version}/emission_gap_temp_summary_data.csv"
 fairdir = f"../output/{version}/fair_temperatures/"
 scenariofiles = [
